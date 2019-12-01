@@ -1,0 +1,151 @@
+﻿<Window x:Class="Winding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Winding"        
+        mc:Ignorable="d"
+        Title="Обмотки" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainVM/>
+    </Window.DataContext>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"  />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{Binding right_bord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="0.25*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <GridSplitter Style="{StaticResource Vertical}"/>
+        <GridSplitter Style="{StaticResource Horizontal}"/>
+
+        <Grid Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="270" />
+                <ColumnDefinition Width="0*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" >
+                <TextBlock Margin="5,0,0,0" Style="{StaticResource Wire_type_text}" Text="Размеры провода:"></TextBlock>
+                <DockPanel Margin="5,0,0,0">
+                    <ComboBox  Style="{StaticResource Wire_type}">
+                        <TextBlock>ПБУ</TextBlock>
+                        <TextBlock>ПТБ</TextBlock>
+                        <TextBlock>ПБП</TextBlock>
+                    </ComboBox>
+                    <TextBox Style="{StaticResource Wire_type_n}"  ></TextBox>
+                    <TextBox Style="{StaticResource Wire_type_x}"  DockPanel.Dock="Right"></TextBox>
+                    <TextBox Style="{StaticResource Wire_type_Z}"></TextBox>
+                    <TextBox Style="{StaticResource Wire_type_a}"></TextBox>
+                    <TextBox Style="{StaticResource Wire_type_b}"></TextBox>
+                    <TextBox Style="{StaticResource Wire_type_x}"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="5,30,0,0">
+                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Количество витков:"></TextBlock>
+                    <TextBox Style="{StaticResource Number_turns_value}"  DockPanel.Dock="Right"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="5,30,0,0">
+                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Поле захода витка:"></TextBlock>
+                    <TextBox Style="{StaticResource Field_numeric}"  DockPanel.Dock="Right"></TextBox>
+                </DockPanel>
+              
+
+             
+               
+            </StackPanel>
+        </Grid>
+        
+
+        <Grid  Grid.Column="2" >           
+
+            <Polyline Stroke="Red" Points="{Binding coord}" />
+
+            <Grid  ShowGridLines="True" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />                   
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="20" ></RowDefinition>
+                </Grid.RowDefinitions>
+                 <TextBox Grid.Column="1"  Grid.Row="1" Text="1"/>
+                <TextBox Grid.Column="2" Grid.Row="1" Text="2"/>
+                <TextBox Grid.Column="3" Grid.Row="1" Text="3"/>
+                <TextBox Grid.Column="4" Grid.Row="1" Text="4"/>
+                <TextBox Grid.Column="5" Grid.Row="1" Text="5"/>
+                <TextBox Grid.Column="6" Grid.Row="1" Text="6"/>
+                <TextBox Grid.Column="7" Grid.Row="1" Text="7"/>
+                <TextBox Grid.Column="8" Grid.Row="1" Text="8"/>
+                <TextBox Grid.Column="9"  Grid.Row="1" Text="9"/>
+                <TextBox Grid.Column="10"  Grid.Row="1" Text="10"/>
+                <TextBox Grid.Column="11" Grid.Row="1" Text="11"/>
+                <TextBox Grid.Column="12" Grid.Row="1" Text="12"/>
+                <TextBox Grid.Column="13" Grid.Row="1" Text="13"/>
+                <TextBox Grid.Column="14" Grid.Row="1" Text="14"/>
+                <TextBox Grid.Column="15" Grid.Row="1" Text="15"/>
+                <TextBox Grid.Column="16" Grid.Row="1" Text="16"/>
+                <TextBox Grid.Column="17" Grid.Row="1" Text="17"/>
+                <TextBox Grid.Column="18" Grid.Row="1" Text="18"/>
+                <TextBox Grid.Column="19" Grid.Row="1" Text="19"/>
+                <TextBox Grid.Column="20" Grid.Row="1" Text="20"/>
+                <TextBox Grid.Column="21" Grid.Row="1" Text="21"/>
+                <TextBox Grid.Column="22" Grid.Row="1" Text="22"/>
+                <TextBox Grid.Column="23" Grid.Row="1" Text="23"/>
+                <TextBox Grid.Column="24" Grid.Row="1" Text="24"/>
+               
+               
+               
+                
+
+
+                
+
+            </Grid>
+                
+        </Grid>
+
+    
+       
+
+
+
+
+
+
+        <Canvas Grid.ColumnSpan="3" Grid.Row="2" Background="Gold">
+            <TextBlock Canvas.Left="60">Нижняя панель</TextBlock>
+        </Canvas>
+
+
+    </Grid>
+</Window>
