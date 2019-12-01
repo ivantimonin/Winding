@@ -127,7 +127,7 @@
                 <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height}"  ></TextBlock>
                 <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм"  ></TextBlock>
             </DockPanel>            
-        </Grid>    
+        </Grid>   
 
     </Grid>
 </Window>
