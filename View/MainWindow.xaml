@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Winding"        
         mc:Ignorable="d"
-        Title="Обмотки" Height="450" Width="800">
+        Title="Обмотки" Height="600" Width="1000">
     <Window.DataContext>
         <local:MainVM/>
     </Window.DataContext>
@@ -13,10 +13,11 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"  />
+            <ColumnDefinition Width="0.5*"  />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{Binding right_bord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   />
+            <ColumnDefinition Width="{Binding right_bord, Mode=TwoWay}"   />
         </Grid.ColumnDefinitions>
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="0.75*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -53,19 +54,14 @@
                 <DockPanel Margin="5,30,0,0">
                     <TextBlock Style="{StaticResource Wire_type_text}" Text="Поле захода витка:"></TextBlock>
                     <TextBox Style="{StaticResource Field_numeric}"  DockPanel.Dock="Right"></TextBox>
-                </DockPanel>
-              
-
-             
-               
+                </DockPanel>               
             </StackPanel>
-        </Grid>
+        </Grid>       
+            
         
-
         <Grid  Grid.Column="2" >           
 
-            <Polyline Stroke="Red" Points="{Binding coord}" />
-
+            <Polyline Stroke="Red" Points="{Binding coord}" />           
             <Grid  ShowGridLines="True" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -96,56 +92,42 @@
                     <ColumnDefinition />                   
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions >
-                    <RowDefinition Height="20" ></RowDefinition>
+                    <RowDefinition Height="30" ></RowDefinition>
                 </Grid.RowDefinitions>
-                 <TextBox Grid.Column="1"  Grid.Row="1" Text="1"/>
-                <TextBox Grid.Column="2" Grid.Row="1" Text="2"/>
-                <TextBox Grid.Column="3" Grid.Row="1" Text="3"/>
-                <TextBox Grid.Column="4" Grid.Row="1" Text="4"/>
-                <TextBox Grid.Column="5" Grid.Row="1" Text="5"/>
-                <TextBox Grid.Column="6" Grid.Row="1" Text="6"/>
-                <TextBox Grid.Column="7" Grid.Row="1" Text="7"/>
-                <TextBox Grid.Column="8" Grid.Row="1" Text="8"/>
-                <TextBox Grid.Column="9"  Grid.Row="1" Text="9"/>
-                <TextBox Grid.Column="10"  Grid.Row="1" Text="10"/>
-                <TextBox Grid.Column="11" Grid.Row="1" Text="11"/>
-                <TextBox Grid.Column="12" Grid.Row="1" Text="12"/>
-                <TextBox Grid.Column="13" Grid.Row="1" Text="13"/>
-                <TextBox Grid.Column="14" Grid.Row="1" Text="14"/>
-                <TextBox Grid.Column="15" Grid.Row="1" Text="15"/>
-                <TextBox Grid.Column="16" Grid.Row="1" Text="16"/>
-                <TextBox Grid.Column="17" Grid.Row="1" Text="17"/>
-                <TextBox Grid.Column="18" Grid.Row="1" Text="18"/>
-                <TextBox Grid.Column="19" Grid.Row="1" Text="19"/>
-                <TextBox Grid.Column="20" Grid.Row="1" Text="20"/>
-                <TextBox Grid.Column="21" Grid.Row="1" Text="21"/>
-                <TextBox Grid.Column="22" Grid.Row="1" Text="22"/>
-                <TextBox Grid.Column="23" Grid.Row="1" Text="23"/>
-                <TextBox Grid.Column="24" Grid.Row="1" Text="24"/>
-               
-               
-               
-                
-
-
-                
-
+                <TextBox Grid.Column="1"  Grid.Row="1" Text="1"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="2"  Grid.Row="1" Text="2"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="3"  Grid.Row="1" Text="3"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="4"  Grid.Row="1" Text="4"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="5"  Grid.Row="1" Text="5"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="6"  Grid.Row="1" Text="6"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="7"  Grid.Row="1" Text="7"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="8"  Grid.Row="1" Text="8"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="9"  Grid.Row="1" Text="9"   Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="10" Grid.Row="1" Text="10"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="11" Grid.Row="1" Text="11"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="12" Grid.Row="1" Text="12"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="13" Grid.Row="1" Text="13"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="14" Grid.Row="1" Text="14"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="15" Grid.Row="1" Text="15"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="16" Grid.Row="1" Text="16"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="17" Grid.Row="1" Text="17"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="18" Grid.Row="1" Text="18"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="19" Grid.Row="1" Text="19"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="20" Grid.Row="1" Text="20"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="21" Grid.Row="1" Text="21"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="22" Grid.Row="1" Text="22"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="23" Grid.Row="1" Text="23"  Style="{StaticResource Wire_type_text}"/>
+                <TextBox Grid.Column="24" Grid.Row="1" Text="24"  Style="{StaticResource Wire_type_text}"/>
             </Grid>
-                
         </Grid>
 
-    
-       
-
-
-
-
-
-
-        <Canvas Grid.ColumnSpan="3" Grid.Row="2" Background="Gold">
-            <TextBlock Canvas.Left="60">Нижняя панель</TextBlock>
-        </Canvas>
-
+        <Grid Grid.ColumnSpan="3" Grid.Row="2"  Margin="5,10,50,100">
+            <DockPanel >
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="Высота слоевой обмотки: "></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height}"  ></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм"  ></TextBlock>
+            </DockPanel>            
+        </Grid>    
 
     </Grid>
 </Window>

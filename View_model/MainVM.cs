@@ -12,10 +12,7 @@ using System.Windows;
 namespace Winding
 {
     public class MainVM : INotifyPropertyChanged
-    {  
-
-
-
+    {
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
@@ -30,7 +27,7 @@ namespace Winding
             set
             {
                 _a = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+                View_change();
             }
         }
 
@@ -41,9 +38,10 @@ namespace Winding
             set
             {
                 _b = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+                View_change();
             }
         }
+
         private double _Z;//изоляция провода
         public double Z
         {
@@ -51,7 +49,7 @@ namespace Winding
             set
             {
                 _Z = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+                View_change();
             }
         }
 
@@ -61,10 +59,23 @@ namespace Winding
             get { return _number_turns; }
             set
             {
-                _number_turns = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+                if (value > 300)
+                {
+                    value = 300;
+                }
+                if (value < 0)
+                {
+                    value = 0;
+                }
+                else
+                {
+                    _number_turns = value;
+
+                }
+                View_change();
             }
         }
+
         private string _type_of_wire;//тип провода     
         public string type_of_wire
         {
@@ -72,22 +83,20 @@ namespace Winding
             set
             {
                 _type_of_wire = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+                View_change();
             }
         }
-        
 
-        private string _right_bord="500";
+        private string _right_bord = "600";
         public string right_bord
         {
             get { return _right_bord; }
             set
-            {     
-                _right_bord = value;                
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+            {
+                _right_bord = value;
+                View_change();
             }
         }
-
 
 
         private int _N;//кол-во элементарок     
@@ -98,8 +107,7 @@ namespace Winding
             {
                 MessageBox.Show($"Переменная=");
                 _N = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
-
+                View_change();
             }
         }
 
@@ -118,34 +126,37 @@ namespace Winding
                     value = 1;
                 }
                 _Field_numeric = value;
-                OnPropertyChanged("coord"); // уведомление View о том, что изменились координаты
+                View_change();
             }
-        }        
-       
-       
-        private double left_border = 0;
+        }
 
-      
+        private double left_border = 0;
 
         Wire_type some_wire = new Wire_type();
         private string _coord;
         public string coord
         {
-            get {                
-                return _coord= some_wire.Paint(a,b, number_turns,Z, Field_numeric,left_border, Convert.ToDouble(right_bord)); }
-            set {
-
+            get
+            {
+                return _coord = some_wire.Paint(a, b, number_turns, Z, Field_numeric, left_border, Convert.ToDouble(right_bord));
+            }
+            set
+            {
             }
         }
+        public double _height;
+        public double Height
+        {
+            get
+            {
+                return _height = some_wire.Find_height();
+            }            
+        }        
         
-        
-
-
-
-
-
-
+        private void View_change()
+        {
+            OnPropertyChanged("coord");
+            OnPropertyChanged("Height");
+        }
     }
-
-
 }
