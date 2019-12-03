@@ -22,8 +22,7 @@ namespace Winding
     {
         public MainWindow()
         {
-            InitializeComponent();
-            
+            InitializeComponent();   
 
         }
 

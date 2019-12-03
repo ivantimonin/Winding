@@ -87,7 +87,7 @@ namespace Winding
             }
         }
 
-        private string _right_bord = "600";
+        private string _right_bord = "900";
         public string right_bord
         {
             get { return _right_bord; }
@@ -138,7 +138,9 @@ namespace Winding
         {
             get
             {
-                return _coord = some_wire.Paint(a, b, number_turns, Z, Field_numeric, left_border, Convert.ToDouble(right_bord));
+                return _coord = some_wire.Paint(a, b, number_turns, Z, Field_numeric, left_border, 
+                    
+                    Convert.ToDouble(right_bord.Replace(".", ",")));
             }
             set
             {
