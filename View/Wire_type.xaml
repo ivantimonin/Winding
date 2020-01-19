@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Winding">
     <Style x:Key="Data_input">
-        <Setter Property="TextBox.FontSize" Value="20"/>
+        <Setter Property="TextBox.FontSize" Value="12"/>
         <Setter Property="TextBox.FontWeight" Value="DemiBold"/>
         <Setter Property="TextBox.Foreground" Value="Blue"/>
         <Setter Property="TextBox.Background" Value="LightYellow"/>
@@ -22,7 +22,15 @@
     <Style x:Key="Wire_type" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="TextBox.Width" Value="80"/>
-        <Setter Property="TextBox.Text" Value="{Binding type_of_wire, UpdateSourceTrigger=PropertyChanged}"/>
+
+        
+        <Setter Property="ComboBox.Text" Value="{Binding Type_of_wire, UpdateSourceTrigger=PropertyChanged}"/>
+    </Style>
+
+    <Style x:Key="Go_type" BasedOn="{StaticResource Data_input}">
+        <Setter Property="DockPanel.Dock" Value="Left"/>
+        <Setter Property="TextBox.Width" Value="80"/>
+        <Setter Property="ComboBox.Text" Value="{Binding Number_of_go, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
     <Style x:Key="Wire_type_a" BasedOn="{StaticResource Data_input}">
@@ -60,20 +68,24 @@
     </Style>
 
     <Style x:Key="Number_turns_value" BasedOn="{StaticResource Data_input}">      
-        <Setter Property="TextBox.Text" Value="{Binding number_turns, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}"/>
+        <Setter Property="TextBox.Text" Value="{Binding Number_turns, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}"/>
     </Style>
 
     <Style x:Key="Field_numeric" BasedOn="{StaticResource Data_input}">
         <Setter Property="TextBox.Text" Value="{Binding Field_numeric, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
-    <Style x:Key="Right_border" BasedOn="{StaticResource Data_input}">
-        <Setter Property="ColumnDefinition.Width" Value="{Binding Right_border, UpdateSourceTrigger=PropertyChanged}"/>
-      
-        
+    <Style x:Key="Field_quantity" BasedOn="{StaticResource Data_input}">
+        <Setter Property="TextBox.Text" Value="{Binding Field_quantity, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
-    
+    <Style x:Key="Right_border" BasedOn="{StaticResource Data_input}">
+        <Setter Property="ColumnDefinition.Width" Value="{Binding Right_border, UpdateSourceTrigger=PropertyChanged}"/>       
+    </Style>
+
+    <Style x:Key="Go_quantity" BasedOn="{StaticResource Data_input}">
+        <Setter Property="TextBox.Text" Value="{Binding Go_quantity, UpdateSourceTrigger=PropertyChanged }"/>
+    </Style>
 
 
 

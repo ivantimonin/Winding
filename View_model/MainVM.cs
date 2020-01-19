@@ -19,8 +19,11 @@ namespace Winding
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
+        /// <summary>
+        /// меньшая сторона провода   
+        /// </summary>
 
-        private double _a;//меньшая сторона провода        
+        private static double _a;     
         public double a
         {
             get { return _a; }
@@ -31,7 +34,10 @@ namespace Winding
             }
         }
 
-        private double _b;//большая сторона провода
+        /// <summary>
+        /// большая сторона провода
+        /// </summary>
+        private static double _b;
         public double b
         {
             get { return _b; }
@@ -42,7 +48,10 @@ namespace Winding
             }
         }
 
-        private double _Z;//изоляция провода
+        /// <summary>
+        ///изоляция провода
+        /// </summary>
+        private static double _Z;
         public double Z
         {
             get { return _Z; }
@@ -53,112 +62,129 @@ namespace Winding
             }
         }
 
-        private double _number_turns;//число витков        
-        public double number_turns
-        {
-            get { return _number_turns; }
-            set
-            {
-                if (value > 300)
-                {
-                    value = 300;
-                }
-                if (value < 0)
-                {
-                    value = 0;
-                }
-                else
-                {
-                    _number_turns = value;
+        
 
-                }
-                View_change();
-            }
-        }
-
-        private string _type_of_wire;//тип провода     
-        public string type_of_wire
+        /// <summary>
+        /// Тип провода
+        /// </summary>
+        private static string _type_of_wire;   
+        public string Type_of_wire
         {
             get { return _type_of_wire; }
             set
             {
-                _type_of_wire = value;
+                _type_of_wire = value;                
                 View_change();
             }
         }
 
-        private string _right_bord = "900";
-        public string right_bord
+
+        
+
+        /// <summary>
+        /// Правая граница, рисуемой пазвертки
+        /// </summary>
+        private static string _Area_width = "900";
+        public string Area_width
         {
-            get { return _right_bord; }
+            get { return _Area_width; }
             set
             {
-                _right_bord = value;
+                _Area_width = value;
                 View_change();
             }
         }
 
-
-        private int _N;//кол-во элементарок     
+        /// <summary>
+        /// Количество элементарных проводников
+        ///  </summary>
+        private static int _N;  
         public int N
         {
             get { return _N; }
             set
-            {
-                MessageBox.Show($"Переменная=");
+            {              
                 _N = value;
                 View_change();
             }
         }
 
-        private int _Field_numeric = 12;//поле захода витка    
-        public int Field_numeric
+        /// <summary>
+        /// Количество полей
+        /// </summary>
+        private static int _Field_quantity = 24;  
+        public int Field_quantity
         {
-            get { return _Field_numeric; }
+            get { return _Field_quantity; }
             set
             {
-                if (value > 24)
+                if (value > 50)
                 {
-                    value = 24;
+                    _Field_quantity = 50;
                 }
-                if (value < 1)
+                else if (value < 0)
                 {
-                    value = 1;
+                    _Field_quantity = 0;
                 }
-                _Field_numeric = value;
+                else
+                {
+                    _Field_quantity = value;                  
+                }
                 View_change();
             }
-        }
+        }       
+        
 
-        private double left_border = 0;
+       
 
-        Wire_type some_wire = new Wire_type();
-        private string _coord;
-        public string coord
+        private static string[] _coord;
+        public string[] coord
         {
             get
             {
-                return _coord = some_wire.Paint(a, b, number_turns, Z, Field_numeric, left_border, 
-                    
-                    Convert.ToDouble(right_bord.Replace(".", ",")));
+                
+                Wire_type some_wire = new Wire_type(Convert.ToDouble(Area_width.Replace(".", ",")), Field_quantity, 
+                                                    a, b, Z, Type_of_wire);
+                return _coord = some_wire.Paint(InfoGo.data);
+
             }
             set
             {
             }
         }
-        public double _height;
+
+       
+
+        public static double _height;
         public double Height
         {
             get
             {
+                Wire_type some_wire = new Wire_type(Convert.ToDouble(Area_width.Replace(".", ",")), Field_quantity,
+                                                    a, b, Z, Type_of_wire);              
                 return _height = some_wire.Find_height();
-            }            
-        }        
-        
-        private void View_change()
+            }
+            set
+            {
+            }
+        }
+
+        public static string _Field_coord;
+        public string Field_coord
         {
+            get
+            {
+                Field some_field = new Field(Convert.ToDouble(Area_width.Replace(".", ",")), Field_quantity);
+                return _Field_coord=some_field.Paint_field();
+            }
+        }
+
+        public void View_change()
+        {
+            MessageBox.Show("Я тут");
             OnPropertyChanged("coord");
             OnPropertyChanged("Height");
+            OnPropertyChanged("Field_coord");
         }
     }
 }

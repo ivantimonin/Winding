@@ -14,7 +14,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"  />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{Binding right_bord, Mode=TwoWay}"   />
+            <ColumnDefinition Width="{Binding Area_width, Mode=TwoWay}"   />         
         </Grid.ColumnDefinitions>
        
         <Grid.RowDefinitions>
@@ -47,88 +47,61 @@
                     <TextBox Style="{StaticResource Wire_type_x}"></TextBox>
                 </DockPanel>
                 <DockPanel Margin="5,30,0,0">
-                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Количество витков:"></TextBlock>
-                    <TextBox Style="{StaticResource Number_turns_value}"  DockPanel.Dock="Right"></TextBox>
+                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Число полей:"></TextBlock>
+                    <TextBox Style="{StaticResource Field_quantity}"  DockPanel.Dock="Right"></TextBox>
                 </DockPanel>
+               
+
                 <DockPanel Margin="5,30,0,0">
-                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Поле захода витка:"></TextBlock>
-                    <TextBox Style="{StaticResource Field_numeric}"  DockPanel.Dock="Right"></TextBox>
-                </DockPanel>               
+                    <Grid>
+                        <DataGrid Name="MyDataGrid"  AutoGenerateColumns="False" Style="{StaticResource Data_input}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер хода" Binding="{Binding CurrentGo, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="Поле захода" Binding="{Binding FieldSetting, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="Число витков" Binding="{Binding NumberTurnsInGo, UpdateSourceTrigger=PropertyChanged,StringFormat=0.0##}" Width="*"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid> 
+                </DockPanel>
             </StackPanel>
         </Grid>
 
         
         
-        <Grid Grid.Column="2" >
-            <ScrollViewer Grid.Column="2" Margin="0,0,0,30">
-                <Polyline Stroke="Red" Points="{Binding coord}" />                
-            </ScrollViewer>           
-
-            <Grid  ShowGridLines="True">
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />                   
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions >
-                    <RowDefinition Height="30" ></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBox Grid.Column="1"  Grid.Row="1" Text="1"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="2"  Grid.Row="1" Text="2"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="3"  Grid.Row="1" Text="3"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="4"  Grid.Row="1" Text="4"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="5"  Grid.Row="1" Text="5"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="6"  Grid.Row="1" Text="6"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="7"  Grid.Row="1" Text="7"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="8"  Grid.Row="1" Text="8"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="9"  Grid.Row="1" Text="9"   Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="10" Grid.Row="1" Text="10"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="11" Grid.Row="1" Text="11"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="12" Grid.Row="1" Text="12"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="13" Grid.Row="1" Text="13"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="14" Grid.Row="1" Text="14"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="15" Grid.Row="1" Text="15"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="16" Grid.Row="1" Text="16"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="17" Grid.Row="1" Text="17"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="18" Grid.Row="1" Text="18"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="19" Grid.Row="1" Text="19"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="20" Grid.Row="1" Text="20"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="21" Grid.Row="1" Text="21"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="22" Grid.Row="1" Text="22"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="23" Grid.Row="1" Text="23"  Style="{StaticResource Wire_type_text}"/>
-                <TextBox Grid.Column="24" Grid.Row="1" Text="24"  Style="{StaticResource Wire_type_text}"/>
-            </Grid>
+        <Grid Grid.Column="2">
+            <ScrollViewer Margin="0,20,0,40" >
+                <Grid>
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[0]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[1]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[2]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[3]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[4]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[5]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[6]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[7]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[8]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[9]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[10]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[11]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[12]}" />
+                </Grid>
+            </ScrollViewer>
             
-            </Grid>
+            <Polyline  Stroke="LightSteelBlue" StrokeThickness="1" Points="{Binding Field_coord}" />
+
+
+
+
+
+
+
+        </Grid>
         
         <Grid Grid.ColumnSpan="3" Grid.Row="2"  Background="Lavender">
             <DockPanel >
                 <TextBlock Style="{StaticResource Wire_type_text}" Text="Высота слоевой обмотки: "></TextBlock>
-                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height}"  ></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"   ></TextBlock>
                 <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм"  ></TextBlock>
             </DockPanel>            
         </Grid>   

@@ -74,10 +74,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Model\Build_area.cs" />
+    <Compile Include="Model\Field.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View_model\InfoGo.cs" />
     <Compile Include="View_model\MainVM.cs" />
     <Compile Include="Model\Wire_type.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

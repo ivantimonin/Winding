@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,75 +8,151 @@ using System.Windows;
 
 namespace Winding
 {
-    class Wire_type
+    class Wire_type : Build_area
     {
-        public string Name { get; private set;}// тип выбранного провода
-        public double a_size { get; private set; }//меньшая сторона элементарного провода
-        public double b_size { get; private set; }//большая сторона элементарного провода
-        public double isolation_size { get; private set; }//размер изоляции на две стороны
-        public double number_turns { get; private set; }//числов витков
+        /// <summary>
+        /// Тип выбранного провода
+        /// </summary>
+        public string Type_of_wire { get; private set; }
+        /// <summary>
+        /// Меньшая сторона элементарного проводника
+        /// </summary>
+        public double a { get; private set; }
+        /// <summary>
+        /// Большая сторона элементарного проводника
+        /// </summary>
+        public double b { get; private set; }
+        /// <summary>
+        /// Размер изоляции на две стороны
+        /// </summary>
+        public double Z { get; private set; }
+        /// <summary>
+        /// Число витков
+        /// </summary>
+        public double Number_turns { get; private set; }
         private string up_winding_coord { get; set; } = "";
-        
-        private double y_end = 60;//координата начала и конца отрисовки по y
-        private double y_begin = 60;//координата начала и конца отрисовки по y
 
-        public Wire_type() { }
         
-        public string Paint(double a, double b, double number_turns, double Z,
-                            int Field_numeric, double left_border, double right_border)
+        public Wire_type(double Area_width, double Field_quantity,
+                         double a, double b, double Z, string Type_of_wire) : base(Area_width, Field_quantity)
         {
-            double pole_size=(right_border - left_border)/26;//ширина поля
-            left_border += pole_size;
-            right_border -= pole_size;
-            double y1 = 60;//координата начала и конца отрисовки по y
-            y_begin = y1;
-            double height_turn = Z+b;// высота витка 
-            double x1 = pole_size*Field_numeric+ pole_size/2;//будет задавать пользователь( поле захода обмотки)        
-            double height_inclien = height_turn*(right_border-x1)/(right_border- left_border);//высота наклона
+            this.a = a;
+            this.b = b;
+            this.Z = Z;           
+            this.Type_of_wire = Type_of_wire;
+
+
+        }
+
+        public string[] Paint(ObservableCollection<InfoGo> data)
+        {
+           int Number_go = data.Count;
+           //MessageBox.Show(Convert.ToString(Number_go));
+
+           string[] all_coord = new string[Number_go];
+          
+           for (int i = 0; i < Number_go; i++)
+           {
+                //MessageBox.Show($"{data[i].CurrentGo}");
+
+                all_coord[i] = Paint_one_go(Number_go, data[i].FieldSetting, data[i].NumberTurnsInGo, data[i].CurrentGo);
+
+            }          
+
+            return all_coord;
+        }
+        
+
+
+                
+        private string Paint_one_go( int Number_go, int Field_numeric, double Number_turns, int fact_go)
+        {
+           // MessageBox.Show($"{fact_go}");
+
+            /*Как мотать обмотку:
+                             x1y1---------x2y2
+            x4y4-------------xmym---------x3y3
+            x5y5-------------x6y6
+            */
+            double height_turn = Calculate_turn_height();// высота витка 
+            double y1 = Top_border+ (fact_go)*height_turn;
             
-            for (int turn = 0; turn < Math.Floor(number_turns); turn++)//отрисовка целых витков
+            double x1 =Left_border+Field_width * Field_numeric- Field_width / 2;//будет задавать пользователь( поле захода обмотки)        
+            double height_inclien = height_turn*(Area_width-Right_border - x1)/(Area_width-Right_border - Left_border);//высота наклона
+            
+            for (int turn = 0; turn < Math.Floor(Number_turns); turn++)//отрисовка целых витков
             {               
-                double x2 = right_border;
+                double x2 = Area_width-Right_border;
                 double y2 = y1 + height_inclien;
-                double x3 = right_border;
+                double x3 = Area_width-Right_border;
                 double y3 = y2 + height_turn;
-                double x4 = left_border;
+                double xm = x1;
+                double ym = y1 + height_turn;
+                double x4 = Left_border;
                 double y4 = y2;
-                double x5 = left_border;
+                double x5 = Left_border;
                 double y5 = y4 + height_turn;
                 double x6 = x1;
                 double y6 = 2*height_turn+y1;
-                double[] coord = { x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6};
-                y_end = y6;
+                double[] coord = { x1, y1, x2, y2, x3, y3, xm,ym, x1,y1,x2,y2,x3,y3,xm,ym,xm,ym+((Number_go-1)*height_turn),
+                                   x4, y4+((Number_go-1)*height_turn), x5, y5+((Number_go-1)*height_turn),
+                                    x6, y6+((Number_go-1)*height_turn),xm,ym+((Number_go-1)*height_turn),
+                                    x4,y4+((Number_go-1)*height_turn),x5,y5+((Number_go-1)*height_turn),x6,y6+((Number_go-1)*height_turn)};
+                Down_border = y6;//для высоты обмотки
+               
                 up_winding_coord = Add_coord(coord, turn, true);
-                y1 = y1+ height_turn;
+                y1 = y1+ height_turn* (Number_go);
                 //отрисовка дробных витков
-                double not_int_turn = number_turns - Math.Floor(number_turns); //часть дроб-го витка
-                if (number_turns - Math.Floor(number_turns) != 0 && turn == Math.Floor(number_turns) - 1)
+                double not_int_turn = Number_turns - Math.Floor(Number_turns); //часть дроб-го витка
+                if (Number_turns - Math.Floor(Number_turns) != 0 && turn == Math.Floor(Number_turns) - 1)
                 {
                    
                     if (x6 + (x2 - x4) * not_int_turn > x2)//переход на след-щий уровень
                     {
+
                         double[] part_coord = {
-                            x3,y3+height_turn,
-                            x3,y3,
-                            x6,y6-height_turn,
-                            x6,y6,
-                            x5,y5,
-                            x5,y5+height_turn,
-                            x5 +((x2 - x5) * not_int_turn-(x3-x6)),y5+height_turn+height_inclien*
-                            ((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)};
-                        y_end = y5 + height_turn + height_inclien *
+                            x3,y3+height_turn+((Number_go-1)*height_turn),
+                            x3,y3+((Number_go-1)*height_turn),
+                            x6,y6-height_turn+((Number_go-1)*height_turn),
+                            x6,y6+((Number_go-1)*height_turn),
+                            x5,y5+((Number_go-1)*height_turn),
+
+                            x5,y5+height_turn+(((Number_go-1)*height_turn))*2,
+                            x5 +((x2 - x5) * not_int_turn-(x3-x6)),
+                            y5 +height_turn+height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+(((Number_go-1)*height_turn))*2,
+                            x5 +((x2 - x5) * not_int_turn-(x3-x6)),
+                            y5+height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+(((Number_go-1)*height_turn))*2,
+
+
+                            x5,y5+((Number_go-1)*height_turn)+(((Number_go-1)*height_turn)),
+                            x5,y5+((Number_go-1)*height_turn)+(((Number_go-1)*height_turn))+height_turn,
+                            x5 +((x2 - x5) * not_int_turn-(x3-x6)),
+                            y5 +height_turn+height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+(((Number_go-1)*height_turn))*2,
+
+
+                                                                                };
+
+                        Down_border = y5 + height_turn + height_inclien *
                             ((x2 - x5) * not_int_turn - (x3 - x6)) / (x2 - x1);
                         up_winding_coord = Add_coord(part_coord, turn, false);
+                        
                     }
                     else // перехода на следующий уровень нет
                     {
                         double[] part_coord = {
                            
-                            x6+(x2 - x5) * not_int_turn, y5+height_turn+height_inclien*
-                            ((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)};
-                        y_end = y5 + height_turn + height_inclien *
+                            x6+(x2 - x5) * not_int_turn,
+                            y5 +height_turn+height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+((Number_go-1)*height_turn),
+                            x6+(x2 - x5) * not_int_turn,
+                            y5 +height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+((Number_go-1)*height_turn),
+                            x6,
+                            ym+((Number_go-1)*height_turn)
+
+
+
+                              };
+
+                        Down_border = y5 + height_turn + height_inclien *
                             ((x2 - x5) * not_int_turn - (x3 - x6)) / (x2 - x1);
                         up_winding_coord = Add_coord(part_coord, turn, false);
                     }
@@ -101,9 +178,32 @@ namespace Winding
             return up_winding_coord;
         }
 
-        public double Find_height()
+        public  double Find_height()
         {
-            return  y_end - y_begin;
+            if (Number_turns == 0)
+            {
+                return 0;
+            }            
+            return Down_border- Top_border;
+        }
+
+        private double Calculate_turn_height()
+        {
+            if (Type_of_wire == "ПТБ" && b>0)
+            {
+                return (b + 0.15) * 2 + 0.2 + Z;
+            }         
+
+            if (Type_of_wire == "ПБУ" && b > 0)
+            {
+                return b+Z;
+            }
+
+            if (Type_of_wire == "ПБП" && b > 0)
+            {
+                return b+0.34 + Z;
+            }
+            return 0;
         }
     }
 }
