@@ -5,14 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Winding"        
         mc:Ignorable="d"
+        
         Title="Обмотки" Height="600" Width="1200">
     <Window.DataContext>
-        <local:MainVM/>
+        <local:MainVM>
+            
+            
+        </local:MainVM>
+        
+
     </Window.DataContext>
+   
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"  />
+            <ColumnDefinition Width="0.3*"  />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="{Binding Area_width, Mode=TwoWay}"   />         
         </Grid.ColumnDefinitions>
@@ -50,29 +57,45 @@
                     <TextBlock Style="{StaticResource Wire_type_text}" Text="Число полей:"></TextBlock>
                     <TextBox Style="{StaticResource Field_quantity}"  DockPanel.Dock="Right"></TextBox>
                 </DockPanel>
-               
+
+                <DockPanel Margin="5,30,0,0">
+                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Нправление намотки:"></TextBlock>
+                    <ComboBox  Style="{StaticResource Direction_type}" >
+                        <TextBlock>Правое</TextBlock>
+                        <TextBlock>Левое</TextBlock>                        
+                    </ComboBox>
+                </DockPanel>
+
 
                 <DockPanel Margin="5,30,0,0">
                     <Grid>
-                        <DataGrid Name="MyDataGrid"  AutoGenerateColumns="False" Style="{StaticResource Data_input}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Номер хода" Binding="{Binding CurrentGo, UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridTextColumn Header="Поле захода" Binding="{Binding FieldSetting, UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridTextColumn Header="Число витков" Binding="{Binding NumberTurnsInGo, UpdateSourceTrigger=PropertyChanged,StringFormat=0.0##}" Width="*"/>
-
+                        <DataGrid  ItemsSource="{Binding Path=Items_data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  Name="MyDataGrid"
+                                  AutoGenerateColumns="False"
+                                  ColumnHeaderStyle="{StaticResource Wire_type_text}"
+                                  Style="{StaticResource Data_input}"                               
+                                  CanUserResizeColumns="False"
+                                  CanUserSortColumns="False"   
+                                  BorderBrush="Black"
+                                  GridLinesVisibility="None"
+                                  SelectionMode="Extended"                 
+                                   >
+                            <DataGrid.Columns   >
+                                <DataGridTextColumn Header="№ хода"  Binding="{Binding Path=CurrentGo, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                <DataGridTextColumn Header="Поле захода" Binding="{Binding Path=FieldSetting, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                <DataGridTextColumn Header="Число витков" Binding="{Binding Path=NumberTurnsInGo, UpdateSourceTrigger=LostFocus, StringFormat=0.0##, Mode=TwoWay}"  Width="*" />
+                               
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid> 
                 </DockPanel>
             </StackPanel>
-        </Grid>
-
-        
+        </Grid>        
         
         <Grid Grid.Column="2">
             <ScrollViewer Margin="0,20,0,40" >
                 <Grid>
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[0]}" />
+                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[0], Mode=TwoWay}" />
                     <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[1]}" />
                     <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[2]}" />
                     <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[3]}" />
@@ -86,15 +109,8 @@
                     <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[11]}" />
                     <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[12]}" />
                 </Grid>
-            </ScrollViewer>
-            
+            </ScrollViewer>            
             <Polyline  Stroke="LightSteelBlue" StrokeThickness="1" Points="{Binding Field_coord}" />
-
-
-
-
-
-
 
         </Grid>
         
@@ -105,6 +121,5 @@
                 <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм"  ></TextBlock>
             </DockPanel>            
         </Grid>   
-
     </Grid>
 </Window>

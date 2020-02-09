@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 namespace Winding
 {
     class Field: Build_area
-    {
-       
+    {       
         private string field_coord="";
-
         private double y_up = 10;//верхний край области построения
         private double y_down = 3000;//пока так, но потом это должно тоже считаться 
 

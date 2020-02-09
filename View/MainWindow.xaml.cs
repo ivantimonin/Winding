@@ -23,8 +23,7 @@ namespace Winding
         public MainWindow()
         {
             InitializeComponent();
-          
-            MyDataGrid.ItemsSource = InfoGo.data;
+           
         }
 
        

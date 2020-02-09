@@ -80,7 +80,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View_model\InfoGo.cs" />
+    <Compile Include="View_model\Info_go.cs" />
     <Compile Include="View_model\MainVM.cs" />
     <Compile Include="Model\Wire_type.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

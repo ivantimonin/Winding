@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Winding">
     <Style x:Key="Data_input">
-        <Setter Property="TextBox.FontSize" Value="12"/>
+        <Setter Property="TextBox.FontSize" Value="14"/>
         <Setter Property="TextBox.FontWeight" Value="DemiBold"/>
         <Setter Property="TextBox.Foreground" Value="Blue"/>
         <Setter Property="TextBox.Background" Value="LightYellow"/>
@@ -11,7 +11,7 @@
     </Style>
 
     <Style x:Key="Wire_type_text">
-        <Setter Property="TextBox.FontSize" Value="18"/>
+        <Setter Property="TextBox.FontSize" Value="14"/>
         <Setter Property="TextBox.IsReadOnly"  Value="True"/>
         <Setter Property="TextBox.Foreground" Value="Black"/>
         <Setter Property="TextBox.HorizontalContentAlignment" Value="Center"/>
@@ -21,10 +21,15 @@
 
     <Style x:Key="Wire_type" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Left"/>
-        <Setter Property="TextBox.Width" Value="80"/>
-
-        
+        <Setter Property="TextBox.Width" Value="80"/>        
         <Setter Property="ComboBox.Text" Value="{Binding Type_of_wire, UpdateSourceTrigger=PropertyChanged}"/>
+    </Style>
+
+
+    <Style x:Key="Direction_type" BasedOn="{StaticResource Data_input}">
+        <Setter Property="DockPanel.Dock" Value="Left"/>
+        <Setter Property="TextBox.Width" Value="auto"/>
+        <Setter Property="ComboBox.Text" Value="{Binding Winding_direction, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
     <Style x:Key="Go_type" BasedOn="{StaticResource Data_input}">
@@ -37,7 +42,7 @@
         
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="TextBox.Width" Value="50"/>
-        <Setter Property="TextBox.Text" Value="{Binding a, UpdateSourceTrigger=PropertyChanged,  StringFormat=0.0##}"/>
+        <Setter Property="TextBox.Text" Value="{Binding a,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
     <Style x:Key="Wire_type_b" BasedOn="{StaticResource Data_input}">
