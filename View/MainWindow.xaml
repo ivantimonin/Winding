@@ -95,10 +95,10 @@
         <Grid Grid.Column="2">
             <ScrollViewer Margin="0,20,0,40" >
                 <Grid>
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[0], Mode=TwoWay}" />
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[1]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[2]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[3]}" />
+                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel"  Points="{Binding coord[0], Mode=TwoWay}" />
+                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel"  Points="{Binding coord[1]}" />
+                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel" Points="{Binding coord[2]}" />
+                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel" Points="{Binding coord[3]}" />
                     <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[4]}" />
                     <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[5]}" />
                     <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[6]}" />
@@ -110,14 +110,14 @@
                     <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[12]}" />
                 </Grid>
             </ScrollViewer>            
-            <Polyline  Stroke="LightSteelBlue" StrokeThickness="1" Points="{Binding Field_coord}" />
+            <Polyline  Stroke="LightGreen" StrokeThickness="2" Points="{Binding Field_coord}" />
 
         </Grid>
         
         <Grid Grid.ColumnSpan="3" Grid.Row="2"  Background="Lavender">
             <DockPanel >
                 <TextBlock Style="{StaticResource Wire_type_text}" Text="Высота слоевой обмотки: "></TextBlock>
-                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"   ></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"   ></TextBlock>
                 <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм"  ></TextBlock>
             </DockPanel>            
         </Grid>   
