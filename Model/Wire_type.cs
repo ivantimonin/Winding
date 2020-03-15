@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Winding.View_model;
 
 namespace Winding
 {
@@ -47,11 +46,12 @@ namespace Winding
             this.Type_of_wire = Type_of_wire;
         }
 
-        public string[] Paint(ObservableCollection<MainVM> data)
+        public string[] Paint(BindingList<MainVM> data)
         {
             int Number_go = data.Count;
             string[] all_coord = new string[Number_go];
             double n_part = 0;
+            
             for (int i = 0; i < Number_go; i++)
             {
                 if (i > 0)
@@ -73,15 +73,12 @@ namespace Winding
                         
         private string Paint_one_go( int Number_go, int Field_numeric, double Number_turns, int fact_go, double n_part)
         {
-            //MessageBox.Show($"{n_part}");
-
             /*Как мотать обмотку (левая):
                              x1y1------>--x2y2
             x4y4-------------xmym---------x3y3
             x5y5-------------x6y6
             */
-
-
+            
             /*Как мотать обмотку (правая):
             x2y2------<------x1y1
             x3y3-------------xmym---------x4y4
@@ -89,7 +86,7 @@ namespace Winding
             */
             double height_turn = Calculate_turn_height();// высота витка 
             double y1 = Top_border+ (n_part* height_turn / Field_quantity) + fact_go*height_turn;//смещение хода витка            
-            double x1 =Left_border+Field_width * Field_numeric- Field_width / 2;//будет задавать пользователь( поле захода обмотки)        
+            double x1 =Left_border+Field_width * Field_numeric- Field_width / 2;// поле захода обмотки
             double height_inclien=0;//высота наклона
             if (Winding_direction == "Левое")
             {
@@ -99,6 +96,7 @@ namespace Winding
             {
                 height_inclien = height_turn * (Left_border - x1) / (Left_border - (Area_width - Right_border));
             }
+            
             for (int turn = 0; turn < Math.Floor(Number_turns); turn++)//отрисовка целых витков
             {
                 double x2=0;
@@ -122,29 +120,31 @@ namespace Winding
                 double x6 = x1;
                 double y6 = 2 * height_turn + y1;
                 double[] coord = {
+                                     x1,y1,                 
                                      x2, y2,
                                      x3, y3,
                                      xm, ym,
                                      x1, y1,
                                      x2, y2,
-                                     x2,-10,
-                                     x4,-10,
+                                     x2,0,
+                                     x4,0,
                                      x4, y4+((Number_go-1)*height_turn),
                                      xm, ym+((Number_go-1)*height_turn),
                                      x6, y6+((Number_go-1)*height_turn),
                                      x5 ,y5+((Number_go-1)*height_turn),
-                                     x4, y4+((Number_go-1)*height_turn)
+                                     x4, y4+((Number_go-1)*height_turn),
+                                     x5 ,y5+((Number_go-1)*height_turn),
+                                     x6 ,y6+((Number_go-1)*height_turn)
                                      };
-                Down_border = y6;//для высоты обмотки
-
+                double Down_border_tmp = y6 + ((Number_go - 1) * height_turn);//для высоты обмотки
+                if (Down_border_tmp > Down_border) { Down_border = Down_border_tmp; }//для высоты обмотки
                 up_winding_coord = Add_coord(coord, turn, true);
                 y1 = y1 + height_turn * (Number_go);
                 //отрисовка дробных витков
                 double not_int_turn = Number_turns - Math.Floor(Number_turns); //часть дроб-го витка
                 if (Number_turns - Math.Floor(Number_turns) != 0 && turn == Math.Floor(Number_turns) - 1)
                 {
-
-                    if (x6 + (x2 - x4) * not_int_turn > x2)//переход на след-щий уровень
+                    if (x6 + (x2 - x4) * not_int_turn > x2 && Winding_direction=="Левое" || x6 + (x2 - x4) * not_int_turn < x2 && Winding_direction == "Правое")//переход на след-щий уровень
                     {
                         double[] part_coord = {
                                      x3,y3+height_turn+((Number_go-1)*height_turn),
@@ -160,9 +160,11 @@ namespace Winding
                                      x5,y5+((Number_go-1)*height_turn)+(((Number_go-1)*height_turn)),
                                      x5,y5+((Number_go-1)*height_turn)+(((Number_go-1)*height_turn))+height_turn,
                                      x5 +((x2 - x5) * not_int_turn-(x3-x6)),
-                                     y5 +height_turn+height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+(((Number_go-1)*height_turn))*2,
+                                     y5 +height_turn+height_inclien*((x2 - x5) * not_int_turn - (x3 - x6))/(x2-x1)+(((Number_go-1)*height_turn))*2
                                                    };
-                        Down_border = y5 + height_turn + height_inclien * ((x2 - x5) * not_int_turn - (x3 - x6)) / (x2 - x1);
+
+                        Down_border_tmp = y5 + height_turn + height_inclien * ((x2 - x5) * not_int_turn - (x3 - x6)) / (x2 - x1) + (((Number_go - 1) * height_turn)) * 2;
+                        if (Down_border_tmp > Down_border) { Down_border = Down_border_tmp; }//для высоты обмотки
                         up_winding_coord = Add_coord(part_coord, turn, false);
                     }
                     else // перехода на следующий уровень нет
@@ -175,8 +177,8 @@ namespace Winding
                                     x6,
                                     ym+((Number_go-1)*height_turn)
                                                   };
-                        Down_border = y5 + height_turn + height_inclien *
-                            ((x2 - x5) * not_int_turn - (x3 - x6)) / (x2 - x1);
+                        Down_border_tmp = y5 + height_turn + height_inclien * ((x2 - x5) * not_int_turn - (x3 - x6)) / (x2 - x1) + ((Number_go - 1) * height_turn);
+                        if (Down_border_tmp > Down_border) { Down_border = Down_border_tmp; }//для высоты обмотки
                         up_winding_coord = Add_coord(part_coord, turn, false);
                     }
                 }
@@ -203,11 +205,11 @@ namespace Winding
 
         public  double Find_height()
         {
-            //if (Number_turns == 0)
-            //{
-            //    return 0;
-            //}            
-            return Down_border- Top_border;
+            if (up_winding_coord == "")
+            {
+                return 0;
+            }
+            return Down_border - (Top_border+Calculate_turn_height());
         }
 
         private double Calculate_turn_height()
@@ -227,8 +229,6 @@ namespace Winding
                 return b+0.34 + Z;
             }
             return 0;
-        }
-
-       
+        }       
     }
 }

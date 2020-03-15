@@ -11,22 +11,22 @@ namespace Winding
         /// <summary>
         /// Левый край области построения (отступ)
         /// </summary>
-        static protected double Left_border { get; set; } = 10;
+        protected double Left_border { get; set; } = 20;
 
         /// <summary>
         /// Правый край области построения (отступ)
         /// </summary>
-        static protected double Right_border { get; private set; } = 30;
+        protected double Right_border { get; private set; } = 50;
 
         /// <summary>
         /// Верхний край области построения (отступ)
         /// </summary>
-        static protected double Top_border { get; set; } = 40;
+        protected double Top_border { get; set; } = 40;
 
         /// <summary>
         /// Нижний край области построения (отступ)
         /// </summary>
-        static protected double Down_border { get; set; } = 40;
+        protected double Down_border { get; set; } =0;
 
         /// <summary>
         /// Ширина области построения

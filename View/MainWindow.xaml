@@ -6,36 +6,35 @@
         xmlns:local="clr-namespace:Winding"        
         mc:Ignorable="d"
         
-        Title="Обмотки" Height="600" Width="1200">
+        Title="Слоевая обмотка" WindowState="{Binding Window_state, Mode=OneWayToSource}"
+                                      Width="{Binding Area_width, Mode=OneWayToSource}">
     <Window.DataContext>
         <local:MainVM>
             
-            
         </local:MainVM>
-        
-
     </Window.DataContext>
-   
+    
 
-    <Grid>
+
+    <Grid>   
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*"  />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{Binding Area_width, Mode=TwoWay}"   />         
+            <ColumnDefinition  Width="{Binding ColumnData, Mode=TwoWay}" MinWidth="1" MaxWidth="300" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-       
+
         <Grid.RowDefinitions>
             <RowDefinition Height="0.75*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="0.25*"></RowDefinition>
+            <RowDefinition Height="0.25*" MinHeight="1"></RowDefinition>
         </Grid.RowDefinitions>
 
         <GridSplitter Style="{StaticResource Vertical}"/>
         <GridSplitter Style="{StaticResource Horizontal}"/>
-
-        <Grid Background="AliceBlue">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="270" />
+        <Grid Background="AliceBlue" Margin="0,0,0,5">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="290" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" >
@@ -62,7 +61,7 @@
                     <TextBlock Style="{StaticResource Wire_type_text}" Text="Нправление намотки:"></TextBlock>
                     <ComboBox  Style="{StaticResource Direction_type}" >
                         <TextBlock>Правое</TextBlock>
-                        <TextBlock>Левое</TextBlock>                        
+                        <TextBlock>Левое</TextBlock>
                     </ComboBox>
                 </DockPanel>
 
@@ -73,53 +72,55 @@
                                   Name="MyDataGrid"
                                   AutoGenerateColumns="False"
                                   ColumnHeaderStyle="{StaticResource Wire_type_text}"
-                                  Style="{StaticResource Data_input}"                               
+                                  CellStyle="{StaticResource Data_input}"
                                   CanUserResizeColumns="False"
                                   CanUserSortColumns="False"   
                                   BorderBrush="Black"
                                   GridLinesVisibility="None"
-                                  SelectionMode="Extended"                 
-                                   >
-                            <DataGrid.Columns   >
+                                  SelectionMode="Extended">
+                            <DataGrid.Columns>
                                 <DataGridTextColumn Header="№ хода"  Binding="{Binding Path=CurrentGo, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                                 <DataGridTextColumn Header="Поле захода" Binding="{Binding Path=FieldSetting, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                                 <DataGridTextColumn Header="Число витков" Binding="{Binding Path=NumberTurnsInGo, UpdateSourceTrigger=LostFocus, StringFormat=0.0##, Mode=TwoWay}"  Width="*" />
-                               
+
                             </DataGrid.Columns>
                         </DataGrid>
-                    </Grid> 
+                    </Grid>
                 </DockPanel>
             </StackPanel>
-        </Grid>        
-        
-        <Grid Grid.Column="2">
-            <ScrollViewer Margin="0,20,0,40" >
-                <Grid>
-                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel"  Points="{Binding coord[0], Mode=TwoWay}" />
-                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel"  Points="{Binding coord[1]}" />
-                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel" Points="{Binding coord[2]}" />
-                    <Polyline Stroke="Red" StrokeThickness="1.9" StrokeLineJoin="Bevel" Points="{Binding coord[3]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[4]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[5]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[6]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[7]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[8]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2"  Points="{Binding coord[9]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[10]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[11]}" />
-                    <Polyline Stroke="Red" StrokeThickness="2" Points="{Binding coord[12]}" />
-                </Grid>
-            </ScrollViewer>            
-            <Polyline  Stroke="LightGreen" StrokeThickness="2" Points="{Binding Field_coord}" />
-
         </Grid>
-        
+
+        <Grid Grid.Column="2">            
+            <ScrollViewer>
+                <Grid Margin="0,0,0,10">
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[0]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[1]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[2]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[3]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[4]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[5]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[6]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[7]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[8]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[9]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[10]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[11]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[12]}" />
+                </Grid>
+            </ScrollViewer>
+            <Polyline Style="{StaticResource Area_paint}"  Points="{Binding Field_coord}"  />            
+        </Grid>
+
         <Grid Grid.ColumnSpan="3" Grid.Row="2"  Background="Lavender">
             <DockPanel >
-                <TextBlock Style="{StaticResource Wire_type_text}" Text="Высота слоевой обмотки: "></TextBlock>
-                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"   ></TextBlock>
-                <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм"  ></TextBlock>
-            </DockPanel>            
-        </Grid>   
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="Высота слоевой обмотки без усадки: " VerticalAlignment="Top" Width="Auto"></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="Auto"></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм" Width="Auto"  ></TextBlock>
+            </DockPanel>
+        </Grid>
     </Grid>
+    
+    
+    
+    
 </Window>
