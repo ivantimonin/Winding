@@ -130,8 +130,7 @@ namespace Winding
                 Wire_type some_wire = new Wire_type(Convert.ToDouble(Area_width.Replace(".", ",")) -
                                                     Convert.ToDouble(ColumnData.Replace(".", ",")),
                                                     Field_quantity,
-                                                    a, b, Z, Type_of_wire, Winding_direction);
-                
+                                                    a, b, Z, Type_of_wire, Winding_direction);               
                
                 coord_up = some_wire.Paint(_dataGo_up);
                 Height_up = some_wire.Find_height();
