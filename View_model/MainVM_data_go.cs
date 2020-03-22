@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-
+using System.Windows;
 
 namespace Winding
 {
@@ -29,6 +29,21 @@ namespace Winding
                 UpdateCalcul();
             }
         }
+
+        ///<summary>
+        ///центральный канал
+        ///</summary>
+        private double _center_chenel;
+        public double Center_chenel
+        {
+            get { return _center_chenel; }
+            set
+            {               
+                _center_chenel = value;
+                UpdateCalcul();
+            }
+        }
+
         /// <summary>
         /// Направление намотки
         /// </summary>
@@ -42,15 +57,28 @@ namespace Winding
                 UpdateCalcul();
             }
         }
-        BindingList<MainVM> _dataGo = new BindingList<MainVM>();
-        public BindingList<MainVM> Items_data
+        BindingList<MainVM> _dataGo_up = new BindingList<MainVM>();
+        public BindingList<MainVM> Items_data_up
         {
-            get { return _dataGo; }
+            get { return _dataGo_up; }
             set
             {
-                _dataGo = value;
+                _dataGo_up = value;
+                UpdateCalcul();
             }
         }
+
+        BindingList<MainVM> _dataGo_down = new BindingList<MainVM>();
+        public BindingList<MainVM> Items_data_down
+        {
+            get { return _dataGo_down; }
+            set
+            {
+                _dataGo_down = value;
+                UpdateCalcul();
+            }
+        }
+
 
         /// <summary>
         /// Поле захода витка
@@ -65,6 +93,7 @@ namespace Winding
                 OnPropertyChanged();
             }
         }
+        
 
         /// <summary>
         /// Текущий ход
@@ -94,10 +123,11 @@ namespace Winding
                 OnPropertyChanged();
             }
         }
-
+        
         public MainVM()
         {            
-            Items_data.ListChanged += On_List_Changed;         
+            Items_data_up.ListChanged += On_List_Changed;
+            Items_data_down.ListChanged += On_List_Changed;
         }
 
         private void On_List_Changed(object sender, ListChangedEventArgs e)

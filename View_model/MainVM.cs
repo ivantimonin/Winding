@@ -17,11 +17,10 @@ namespace Winding
                 _Window_state = value;
                 if (value == "Maximized")
                 {
-                    Area_width = Convert.ToString(SystemParameters.WorkArea.Width);
+                    Area_width = Convert.ToString(SystemParameters.WorkArea.Width+14);
                 }
             }
         }
-
         
         /// <summary>
         /// Правая граница, рисуемой развертки
@@ -53,33 +52,62 @@ namespace Winding
             }
         }
 
-        private string[] _coord;
-        public string[] coord
+        private string[] _coord_up, _coord_down;
+        public string[] coord_up
         {
             get
             {
-                return _coord;
+                return _coord_up;
             }
             set
             {
-                _coord = value;
+                _coord_up = value;
+                OnPropertyChanged();
+            }
+        }
+        public string[] coord_down
+        {
+            get
+            {
+                return _coord_down;
+            }
+            set
+            {
+                _coord_down = value;
                 OnPropertyChanged();
             }
         }
 
-        public static double _height;
-        public double Height
+
+
+
+        public static double _height_up, _height_down;
+        public double Height_up
         {
             get
             {
-                return _height;
+                return _height_up;
             }
             set
             {
-                _height = value;
+                _height_up = value;
                 OnPropertyChanged();
             }
         }
+        public double Height_down
+        {
+            get
+            {
+                return _height_down;
+            }
+            set
+            {
+                _height_down = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         public static string _Field_coord;
         public string Field_coord
@@ -103,8 +131,13 @@ namespace Winding
                                                     Convert.ToDouble(ColumnData.Replace(".", ",")),
                                                     Field_quantity,
                                                     a, b, Z, Type_of_wire, Winding_direction);
-                coord = some_wire.Paint(_dataGo);
-                Height = some_wire.Find_height();
+                
+               
+                coord_up = some_wire.Paint(_dataGo_up);
+                Height_up = some_wire.Find_height();
+                coord_down = some_wire.Paint(_dataGo_down, Height_up+ _center_chenel);
+                Height_down= some_wire.Find_height();
+
                 Field some_field = new Field(Convert.ToDouble(Area_width.Replace(".", ","))-
                                              Convert.ToDouble(ColumnData.Replace(".", ",")),
                                              Field_quantity);

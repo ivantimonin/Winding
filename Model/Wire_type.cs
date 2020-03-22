@@ -46,7 +46,7 @@ namespace Winding
             this.Type_of_wire = Type_of_wire;
         }
 
-        public string[] Paint(BindingList<MainVM> data)
+        public string[] Paint(BindingList<MainVM> data, double height_up_winding = 0)
         {
             int Number_go = data.Count;
             string[] all_coord = new string[Number_go];
@@ -66,12 +66,14 @@ namespace Winding
                     }
 
                 }
-                all_coord[i] = Paint_one_go(Number_go, data[i].FieldSetting, data[i].NumberTurnsInGo, data[i].CurrentGo, n_part);
+                all_coord[i] = Paint_one_go(Number_go, data[i].FieldSetting, data[i].NumberTurnsInGo, data[i].CurrentGo, 
+                                            n_part, height_up_winding);
             }
                 return all_coord;
         }
                         
-        private string Paint_one_go( int Number_go, int Field_numeric, double Number_turns, int fact_go, double n_part)
+        private string Paint_one_go( int Number_go, int Field_numeric, double Number_turns, int fact_go, 
+                                     double n_part, double height_up_winding)
         {
             /*Как мотать обмотку (левая):
                              x1y1------>--x2y2
@@ -85,7 +87,8 @@ namespace Winding
                              x6y6---------x5y5
             */
             double height_turn = Calculate_turn_height();// высота витка 
-            double y1 = Top_border+ (n_part* height_turn / Field_quantity) + fact_go*height_turn;//смещение хода витка            
+            double y1 = Top_border+ (n_part* height_turn / Field_quantity) 
+                        + fact_go*height_turn+ height_up_winding;//смещение хода витка            
             double x1 =Left_border+Field_width * Field_numeric- Field_width / 2;// поле захода обмотки
             double height_inclien=0;//высота наклона
             if (Winding_direction == "Левое")
@@ -207,6 +210,7 @@ namespace Winding
         {
             if (up_winding_coord == "")
             {
+                
                 return 0;
             }
             return Down_border - (Top_border+Calculate_turn_height());

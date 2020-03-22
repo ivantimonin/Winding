@@ -21,7 +21,7 @@ namespace Winding
         /// <summary>
         /// Верхний край области построения (отступ)
         /// </summary>
-        protected double Top_border { get; set; } = 40;
+        protected double Top_border { get; set; } = 0;
 
         /// <summary>
         /// Нижний край области построения (отступ)

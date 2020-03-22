@@ -33,88 +33,193 @@
         <GridSplitter Style="{StaticResource Vertical}"/>
         <GridSplitter Style="{StaticResource Horizontal}"/>
         <Grid Background="AliceBlue" Margin="0,0,0,5">
-            <Grid.ColumnDefinitions >
-                <ColumnDefinition Width="290" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" >
-                <TextBlock Margin="5,0,0,0" Style="{StaticResource Wire_type_text}" Text="Размеры провода:"></TextBlock>
-                <DockPanel Margin="5,0,0,0">
-                    <ComboBox  Style="{StaticResource Wire_type}">
-                        <TextBlock>ПБУ</TextBlock>
-                        <TextBlock>ПТБ</TextBlock>
-                        <TextBlock>ПБП</TextBlock>
-                    </ComboBox>
-                    <TextBox Style="{StaticResource Wire_type_n}"  ></TextBox>
-                    <TextBox Style="{StaticResource Wire_type_x}"  DockPanel.Dock="Right"></TextBox>
-                    <TextBox Style="{StaticResource Wire_type_Z}"></TextBox>
-                    <TextBox Style="{StaticResource Wire_type_a}"></TextBox>
-                    <TextBox Style="{StaticResource Wire_type_b}"></TextBox>
-                    <TextBox Style="{StaticResource Wire_type_x}"></TextBox>
-                </DockPanel>
-                <DockPanel Margin="5,30,0,0">
-                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Число полей:"></TextBlock>
-                    <TextBox Style="{StaticResource Field_quantity}"  DockPanel.Dock="Right"></TextBox>
-                </DockPanel>
+             <ScrollViewer>
+                <StackPanel Grid.Column="0" >
+                    <TextBlock Margin="5,0,0,0" Style="{StaticResource Wire_type_text}" Text="Размеры провода:"></TextBlock>
+                    <DockPanel Margin="5,0,0,0">
+                        <ComboBox  Style="{StaticResource Wire_type}">
+                            <TextBlock>ПБУ</TextBlock>
+                            <TextBlock>ПТБ</TextBlock>
+                            <TextBlock>ПБП</TextBlock>
+                        </ComboBox>
+                        <TextBox Style="{StaticResource Wire_type_n}"  ></TextBox>
+                        <TextBox Style="{StaticResource Wire_type_x}"  DockPanel.Dock="Right"></TextBox>
+                        <TextBox Style="{StaticResource Wire_type_Z}"></TextBox>
+                        <TextBox Style="{StaticResource Wire_type_a}"></TextBox>
+                        <TextBox Style="{StaticResource Wire_type_b}"></TextBox>
+                        <TextBox Style="{StaticResource Wire_type_x}"></TextBox>
+                    </DockPanel>
+                    <DockPanel Margin="5,30,0,0">
+                        <TextBlock Style="{StaticResource Wire_type_text}" Text="Число полей:"></TextBlock>
+                        <TextBox Style="{StaticResource Field_quantity}"  DockPanel.Dock="Right" x:Name="Number_field"></TextBox>
+                    </DockPanel>
 
-                <DockPanel Margin="5,30,0,0">
-                    <TextBlock Style="{StaticResource Wire_type_text}" Text="Нправление намотки:"></TextBlock>
-                    <ComboBox  Style="{StaticResource Direction_type}" >
-                        <TextBlock>Правое</TextBlock>
-                        <TextBlock>Левое</TextBlock>
-                    </ComboBox>
-                </DockPanel>
+                    <DockPanel Margin="5,30,0,0">
+                        <TextBlock Style="{StaticResource Wire_type_text}" Text="Нправление намотки:"></TextBlock>
+                        <ComboBox  Style="{StaticResource Direction_type}" >
+                            <TextBlock>Правое</TextBlock>
+                            <TextBlock>Левое</TextBlock>
+                        </ComboBox>
+                    </DockPanel>
+                    
+                    <DockPanel Margin="5,30,0,0">
+                        <TextBlock Style="{StaticResource Wire_type_text}" Text="Верхняя часть обмотки:"></TextBlock>
+                     </DockPanel>
 
+                    <DockPanel Margin="5,0,0,0">
+                        <Grid>
+                            <DataGrid  ItemsSource="{Binding Path=Items_data_up, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                      AutoGenerateColumns="False"
+                                      ColumnHeaderStyle="{StaticResource Wire_type_text}"
+                                      CellStyle="{StaticResource Data_input}"
+                                      CanUserResizeColumns="False"
+                                      CanUserSortColumns="False"   
+                                      BorderBrush="Black"
+                                      GridLinesVisibility="None"
+                                      SelectionMode="Extended">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="№ хода"  Binding="{Binding Path=CurrentGo, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <DataGridTextColumn Header="Поле захода" Binding="{Binding Path=FieldSetting, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <DataGridTextColumn Header="Число витков" Binding="{Binding Path=NumberTurnsInGo, UpdateSourceTrigger=LostFocus, StringFormat=0.0##, Mode=TwoWay}"  Width="*" />
 
-                <DockPanel Margin="5,30,0,0">
-                    <Grid>
-                        <DataGrid  ItemsSource="{Binding Path=Items_data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  Name="MyDataGrid"
-                                  AutoGenerateColumns="False"
-                                  ColumnHeaderStyle="{StaticResource Wire_type_text}"
-                                  CellStyle="{StaticResource Data_input}"
-                                  CanUserResizeColumns="False"
-                                  CanUserSortColumns="False"   
-                                  BorderBrush="Black"
-                                  GridLinesVisibility="None"
-                                  SelectionMode="Extended">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="№ хода"  Binding="{Binding Path=CurrentGo, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                                <DataGridTextColumn Header="Поле захода" Binding="{Binding Path=FieldSetting, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                                <DataGridTextColumn Header="Число витков" Binding="{Binding Path=NumberTurnsInGo, UpdateSourceTrigger=LostFocus, StringFormat=0.0##, Mode=TwoWay}"  Width="*" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </DockPanel>
 
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </DockPanel>
-            </StackPanel>
+                    <DockPanel Margin="5,10,0,0">
+                        <TextBlock Style="{StaticResource Wire_type_text}" Text="Центральный канал,мм:"></TextBlock>
+                        <TextBox Style="{StaticResource Center_Chanel}" ></TextBox>
+                    </DockPanel>
+
+                    <DockPanel Margin="5,10,0,0">
+                        <TextBlock Style="{StaticResource Wire_type_text}" Text="Нижняя часть обмотки:"></TextBlock>
+                    </DockPanel>
+                    <DockPanel Margin="5,0,0,0">
+                        <Grid>
+                            <DataGrid  ItemsSource="{Binding Path=Items_data_down, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                      AutoGenerateColumns="False"
+                                      ColumnHeaderStyle="{StaticResource Wire_type_text}"
+                                      CellStyle="{StaticResource Data_input}"
+                                      CanUserResizeColumns="False"
+                                      CanUserSortColumns="False"   
+                                      BorderBrush="Black"
+                                      GridLinesVisibility="None"
+                                      SelectionMode="Extended">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="№ хода"  Binding="{Binding Path=CurrentGo, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <DataGridTextColumn Header="Поле захода" Binding="{Binding Path=FieldSetting, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <DataGridTextColumn Header="Число витков" Binding="{Binding Path=NumberTurnsInGo, UpdateSourceTrigger=LostFocus, StringFormat=0.0##, Mode=TwoWay}"  Width="*" />
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
 
-        <Grid Grid.Column="2">            
-            <ScrollViewer>
+        <Grid Grid.Column="2">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <UniformGrid Columns="{Binding Text, ElementName=Number_field}"
+                         Rows="1" ClipToBounds="True" Margin="20,0,30,0"
+                         >
+
+                <TextBlock Text="1 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"   />
+                <TextBlock Text="2 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="3 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="4 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="5 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="6 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="7 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="8 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="9 " TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="10" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="11" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="12" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="13" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="14" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="15" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="16" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="17" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="18" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="19" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="20" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="21" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="22" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="23" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="24" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="25" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="26" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="27" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="28" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="29" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="30" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="31" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="32" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="33" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="34" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="35" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="36" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="37" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="38" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="39" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="40" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="41" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="42" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="43" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="44" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="45" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="46" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="47" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="48" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="49" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />
+                <TextBlock Text="50" TextAlignment="Center" Style="{StaticResource Wire_type_text}"  />                
+            </UniformGrid>
+
+            <ScrollViewer Grid.Row="2">
                 <Grid Margin="0,0,0,10">
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[0]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[1]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[2]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[3]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[4]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[5]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[6]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[7]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[8]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[9]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[10]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[11]}" />
-                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord[12]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[0]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[1]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[2]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[3]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[4]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[5]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[6]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[7]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[8]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[9]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[10]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[11]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_up[12]}" />
+
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[0]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[1]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[2]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[3]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[4]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[5]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[6]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[7]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[8]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[9]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[10]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[11]}" />
+                    <Polyline Style="{StaticResource Turn_paint}" Points="{Binding coord_down[12]}"/>
                 </Grid>
             </ScrollViewer>
-            <Polyline Style="{StaticResource Area_paint}"  Points="{Binding Field_coord}"  />            
+            <Polyline Grid.Row="2" Style="{StaticResource Area_paint}"  Points="{Binding Field_coord}"  />            
         </Grid>
 
         <Grid Grid.ColumnSpan="3" Grid.Row="2"  Background="Lavender">
             <DockPanel >
                 <TextBlock Style="{StaticResource Wire_type_text}" Text="Высота слоевой обмотки без усадки: " VerticalAlignment="Top" Width="Auto"></TextBlock>
-                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="Auto"></TextBlock>
+                <TextBlock Style="{StaticResource Wire_type_text}" Text="{Binding Height_down, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="Auto"></TextBlock>
                 <TextBlock Style="{StaticResource Wire_type_text}" Text=" мм" Width="Auto"  ></TextBlock>
             </DockPanel>
         </Grid>

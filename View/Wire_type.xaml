@@ -25,6 +25,12 @@
         <Setter Property="ComboBox.Text" Value="{Binding Type_of_wire, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
+    <Style x:Key="Center_Chanel" BasedOn="{StaticResource Data_input}">
+        <Setter Property="DockPanel.Dock" Value="Right"/>
+        <Setter Property="TextBox.Text" Value="{Binding Center_chenel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
+       
+    </Style>
+
 
     <Style x:Key="Direction_type" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Left"/>
