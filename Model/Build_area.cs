@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Winding
 {
+    [Serializable]
     abstract class Build_area
     {
         /// <summary>
@@ -21,7 +22,7 @@ namespace Winding
         /// <summary>
         /// Верхний край области построения (отступ)
         /// </summary>
-        protected double Top_border { get; set; } = 0;
+        protected double Top_border { get; set; } =0;
 
         /// <summary>
         /// Нижний край области построения (отступ)
@@ -37,7 +38,7 @@ namespace Winding
         /// <summary>
         /// Количество полей
         /// </summary>
-        protected double Field_quantity { get; set; }
+        protected int Field_quantity { get; set; }
 
         /// <summary>
         /// Ширина поля
@@ -46,7 +47,7 @@ namespace Winding
 
 
 
-        protected Build_area(double Area_width, double Field_quantity)
+        protected Build_area(double Area_width, int Field_quantity)
         {                
             this.Area_width = Area_width;
             this.Field_quantity = Field_quantity;
@@ -57,7 +58,5 @@ namespace Winding
         {
             Field_width=(Area_width-Left_border-Right_border) / Field_quantity;          
         }
-        
-
     }
 }

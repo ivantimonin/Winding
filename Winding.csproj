@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PETER.ICO</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -80,10 +83,13 @@
     </Page>
     <Compile Include="Model\Build_area.cs" />
     <Compile Include="Model\Field.cs" />
+    <Compile Include="Model\Save.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View_model\RelayCommand.cs" />
+    <Compile Include="View_model\MainDataGo.cs" />
     <Compile Include="View_model\MainVM_data_go.cs" />
     <Compile Include="View_model\MainVM_wire.cs" />
     <Compile Include="View_model\MainVM.cs" />
@@ -142,6 +148,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PETER.ICO" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

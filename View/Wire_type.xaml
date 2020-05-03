@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Winding">
     <Style x:Key="Data_input">
-        <Setter Property="TextBox.FontSize" Value="14"/>
+        <Setter Property="TextBox.FontSize" Value="{Binding Text, ElementName=Text_size, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="TextBox.FontWeight" Value="DemiBold"/>
         <Setter Property="TextBox.Foreground" Value="Blue"/>
         <Setter Property="TextBox.Background" Value="LightYellow"/>
@@ -11,7 +11,7 @@
     </Style>
 
     <Style x:Key="Wire_type_text">
-        <Setter Property="TextBox.FontSize" Value="14"/>
+        <Setter Property="TextBox.FontSize" Value="{Binding Text, ElementName=Text_size, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="TextBox.IsReadOnly"  Value="True"/>
         <Setter Property="TextBox.Foreground" Value="Black"/>
         <Setter Property="TextBox.HorizontalContentAlignment" Value="Center"/>
@@ -22,50 +22,47 @@
     <Style x:Key="Wire_type" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="TextBox.Width" Value="80"/>        
-        <Setter Property="ComboBox.Text" Value="{Binding Type_of_wire, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ComboBox.Text" Value="{Binding Type_of_wire, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>      
     </Style>
 
     <Style x:Key="Center_Chanel" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Right"/>
-        <Setter Property="TextBox.Text" Value="{Binding Center_chenel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
-       
+        <Setter Property="TextBox.Text" Value="{Binding Center_chenel, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>       
     </Style>
-
 
     <Style x:Key="Direction_type" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="TextBox.Width" Value="auto"/>
-        <Setter Property="ComboBox.Text" Value="{Binding Winding_direction, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ComboBox.Text" Value="{Binding Winding_direction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
     <Style x:Key="Go_type" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="TextBox.Width" Value="80"/>
-        <Setter Property="ComboBox.Text" Value="{Binding Number_of_go, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ComboBox.Text" Value="{Binding Number_of_go, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
-    <Style x:Key="Wire_type_a" BasedOn="{StaticResource Data_input}">
-        
+    <Style x:Key="Wire_type_a" BasedOn="{StaticResource Data_input}">        
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="TextBox.Width" Value="50"/>
-        <Setter Property="TextBox.Text" Value="{Binding a,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="TextBox.Text" Value="{Binding a,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
     </Style>
 
     <Style x:Key="Wire_type_b" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="TextBox.Width" Value="50"/>
-        <Setter Property="TextBox.Text" Value="{Binding b, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
+        <Setter Property="TextBox.Text" Value="{Binding b, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
     </Style>
 
     <Style x:Key="Wire_type_Z" BasedOn="{StaticResource Data_input}">
-        <Setter Property="TextBox.Text" Value="{Binding Z, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
+        <Setter Property="TextBox.Text" Value="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
         <Setter Property="DockPanel.Dock" Value="Bottom"/>
     </Style>
 
     <Style x:Key="Wire_type_n" BasedOn="{StaticResource Data_input}">
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="TextBox.Width" Value="40"/>
-        <Setter Property="TextBox.Text" Value="{Binding N, UpdateSourceTrigger=PropertyChanged,StringFormat=0.0##}"/>
+        <Setter Property="TextBox.Text" Value="{Binding N, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
     <Style x:Key="Wire_type_x" BasedOn="{StaticResource Wire_type_text}">
@@ -79,23 +76,38 @@
     </Style>
 
     <Style x:Key="Number_turns_value" BasedOn="{StaticResource Data_input}">      
-        <Setter Property="TextBox.Text" Value="{Binding Number_turns, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}"/>
+        <Setter Property="TextBox.Text" Value="{Binding Number_turns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=0.0#####}"/>
     </Style>
 
     <Style x:Key="Field_numeric" BasedOn="{StaticResource Data_input}">
-        <Setter Property="TextBox.Text" Value="{Binding Field_numeric, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="TextBox.Text" Value="{Binding Field_numeric, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Style>
 
     <Style x:Key="Field_quantity" BasedOn="{StaticResource Data_input}">
-        <Setter Property="TextBox.Text" Value="{Binding Field_quantity, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ComboBox.Text" Value="{Binding Field_quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,  StringFormat=0}"/>
     </Style>
 
     <Style x:Key="Right_border" BasedOn="{StaticResource Data_input}">
-        <Setter Property="ColumnDefinition.Width" Value="{Binding Right_border, UpdateSourceTrigger=PropertyChanged}"/>       
+        <Setter Property="ColumnDefinition.Width" Value="{Binding Right_border, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>       
     </Style>
 
     <Style x:Key="Go_quantity" BasedOn="{StaticResource Data_input}">
-        <Setter Property="TextBox.Text" Value="{Binding Go_quantity, UpdateSourceTrigger=PropertyChanged }"/>
+        <Setter Property="TextBox.Text" Value="{Binding Go_quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
+    </Style>
+
+    <Style x:Key="Paper_koef" BasedOn="{StaticResource Data_input}">
+        <Setter Property="DockPanel.Dock" Value="Right"/>
+        <Setter Property="TextBox.Text" Value="{Binding Paper_koef, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=0.0##}"/>
+    </Style>
+
+    <Style x:Key="Data_up-down" BasedOn="{StaticResource Data_input}">
+        <Setter Property="DataGrid.CanUserResizeColumns" Value="False"/>
+        <Setter Property="DataGrid.CanUserSortColumns" Value="False"/>
+        <Setter Property="DataGrid.BorderBrush" Value="Black"/>
+        <Setter Property="DataGrid.SelectionMode" Value="Single"/>
+        <Setter Property="DataGrid.HeadersVisibility" Value="Column"/>
+        <Setter Property="DataGrid.AutoGenerateColumns" Value="False"/>
+        <Setter Property="DataGrid.GridLinesVisibility" Value="None"/>        
     </Style>
 
 

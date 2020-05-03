@@ -8,6 +8,12 @@
         <Setter Property="Polyline.StrokeLineJoin" Value="Bevel"/>       
     </Style>
 
+    <Style x:Key="Turn_paint_down">
+        <Setter Property="Polyline.Stroke" Value="Blue"/>
+        <Setter Property="Polyline.StrokeThickness" Value="1.9"/>
+        <Setter Property="Polyline.StrokeLineJoin" Value="Bevel"/>
+    </Style>
+
 
     <Style x:Key="Area_paint">
         <Setter Property="Polyline.Stroke" Value="LightGreen"/>

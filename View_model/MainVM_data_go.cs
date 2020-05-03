@@ -1,14 +1,20 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using Winding;
+
+
 
 namespace Winding
-{
+{    
     public partial class MainVM//данные по каждому ходу
     {
         /// <summary>
         /// Количество полей
         /// </summary>
-        private static int _Field_quantity = 24;
+        private int _Field_quantity=1;
         public int Field_quantity
         {
             get { return _Field_quantity; }
@@ -16,16 +22,18 @@ namespace Winding
             {
                 if (value > 50)
                 {
+                    MessageBox.Show("Максимальное количество полей не должно превышать 50");
                     _Field_quantity = 50;
                 }
-                else if (value < 0)
+                else if (value <= 0)
                 {
-                    _Field_quantity = 0;
+                    _Field_quantity = 1;
                 }
                 else
                 {
                     _Field_quantity = value;
                 }
+                OnPropertyChanged();
                 UpdateCalcul();
             }
         }
@@ -38,8 +46,9 @@ namespace Winding
         {
             get { return _center_chenel; }
             set
-            {               
+            {
                 _center_chenel = value;
+                OnPropertyChanged();
                 UpdateCalcul();
             }
         }
@@ -47,100 +56,93 @@ namespace Winding
         /// <summary>
         /// Направление намотки
         /// </summary>
-        private string _winding_direction = "Левое";
+        private string _winding_direction="Правое";
         public string Winding_direction
         {
             get { return _winding_direction; }
             set
             {
-                _winding_direction = value;
-                UpdateCalcul();
+                if (value == "Левое" || value == "Правое")
+                {
+                    _winding_direction = value;
+                    OnPropertyChanged();
+                    UpdateCalcul();
+                }               
             }
         }
-        BindingList<MainVM> _dataGo_up = new BindingList<MainVM>();
-        public BindingList<MainVM> Items_data_up
-        {
-            get { return _dataGo_up; }
-            set
-            {
-                _dataGo_up = value;
-                UpdateCalcul();
-            }
-        }
-
-        BindingList<MainVM> _dataGo_down = new BindingList<MainVM>();
-        public BindingList<MainVM> Items_data_down
-        {
-            get { return _dataGo_down; }
-            set
-            {
-                _dataGo_down = value;
-                UpdateCalcul();
-            }
-        }
-
-
         /// <summary>
-        /// Поле захода витка
+        /// Данные по каждому ходу верхней части
         /// </summary>
-        private int fieldSetting;
-        public int FieldSetting
+        private  BindingList<MainDataGo> _Items_data_up = new BindingList<MainDataGo>();
+        public BindingList<MainDataGo> Items_data_up
         {
-            get { return fieldSetting; }
+            get { return _Items_data_up; }
             set
             {
-                fieldSetting = value;
+                _Items_data_up = value;
                 OnPropertyChanged();
+                UpdateCalcul();
             }
         }
+        /// <summary>
+        /// Данные по каждому ходу нижней части
+        /// </summary>
+        private  BindingList<MainDataGo> _Items_data_down = new BindingList<MainDataGo>();
+        public BindingList<MainDataGo> Items_data_down
+        {
+            get
+            {
+                return _Items_data_down;
+            }
+            set
+            {
+                _Items_data_down = value;
+                OnPropertyChanged();
+                UpdateCalcul();
+            }
+        }       
         
-
-        /// <summary>
-        /// Текущий ход
-        /// </summary>
-        public int currentGo;
-        public int CurrentGo
-        {
-            get { return currentGo; }
-            set
-            {
-                currentGo = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Число витков в выбранном ходе
-        /// </summary>
-        private double numberTurnsInGo;
-        public double NumberTurnsInGo
-        {
-
-            get { return numberTurnsInGo; }
-            set
-            {
-                numberTurnsInGo = value;
-                OnPropertyChanged();
-            }
-        }
-        
+       
         public MainVM()
-        {            
-            Items_data_up.ListChanged += On_List_Changed;
-            Items_data_down.ListChanged += On_List_Changed;
+        {           
+            Items_data_up.ListChanged += On_List_Changed_up;
+            Items_data_down.ListChanged += On_List_Changed_down;
         }
 
-        private void On_List_Changed(object sender, ListChangedEventArgs e)
+        private void On_List_Changed_up(object sender, ListChangedEventArgs e)
         {
             switch (e.ListChangedType)
             {
-                case (ListChangedType.ItemAdded):
+                case (ListChangedType.ItemAdded):                   
+                    Items_data_up[Items_data_up.Count-1].NumberTurnsInGo = 1;
+                    Items_data_up[Items_data_up.Count-1].CurrentGo = Items_data_up.Count;
+                    Items_data_up[Items_data_up.Count-1].FieldSetting =Field_quantity/2;                    
                     UpdateCalcul();
                     break;
                 case (ListChangedType.ItemChanged):
                     UpdateCalcul();
                     break;
                 case (ListChangedType.ItemDeleted):
+                    UpdateCalcul();
+                    break;
+            }
+        }
+
+
+        private void On_List_Changed_down(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case (ListChangedType.ItemAdded):                    
+                    Items_data_down[Items_data_down.Count - 1].NumberTurnsInGo = 1;
+                    Items_data_down[Items_data_down.Count - 1].CurrentGo = Items_data_down.Count;
+                    Items_data_down[Items_data_down.Count-1].FieldSetting = Field_quantity/2;
+                    UpdateCalcul();
+                    break;
+                case (ListChangedType.ItemChanged):
+                    UpdateCalcul();
+                    break;
+                case (ListChangedType.ItemDeleted):                  
                     UpdateCalcul();
                     break;
             }
